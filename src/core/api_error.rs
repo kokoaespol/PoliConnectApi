@@ -55,7 +55,7 @@ impl ApiErrorBuilder {
 impl Default for ApiError {
     fn default() -> Self {
         Self {
-            status: Default::default(),
+            status: StatusCode::BAD_REQUEST,
             message: Default::default(),
         }
     }
