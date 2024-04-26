@@ -1,7 +1,7 @@
-use axum::http::StatusCode;
 use axum::response::{IntoResponse, Response};
 use axum::Json;
 
+use crate::api_error_message;
 use crate::core::IntoDomain;
 use crate::promedios::domain::use_case::{CalculateGradesUseCase, CalculateMissingUseCase};
 use crate::promedios::presentation::{CalculateGradesRequest, CalculateGradesResponse};
@@ -13,11 +13,11 @@ impl PromediosController {
         let domain = request.into_domain();
 
         let Ok(grade) = CalculateGradesUseCase::new().execute(&domain) else {
-            return StatusCode::BAD_REQUEST.into_response();
+            return api_error_message!("Invalid grades");
         };
 
         let Ok(missing) = CalculateMissingUseCase::new().execute(&domain, grade) else {
-            return StatusCode::BAD_REQUEST.into_response();
+            return api_error_message!("Invalid grades");
         };
 
         Json(CalculateGradesResponse {

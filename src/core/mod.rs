@@ -1,3 +1,5 @@
+pub mod api_error;
+
 pub trait IntoDomain<D> {
     /// Convert self into the corresponding domain type.
     fn into_domain(self) -> D;
