@@ -2,3 +2,4 @@ web
 .git
 .idea
 target
+.env

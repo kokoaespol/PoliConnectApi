@@ -1,0 +1,9 @@
+version: "3"
+services:
+  policonnect:
+    image: kokoa/policonnect
+    build:
+      context: .
+    env_file: ./.env
+    ports:
+      - "${PORT}:${PORT}"
