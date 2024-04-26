@@ -13,3 +13,4 @@ serde = { version = "1.0.198", features = ["derive"] }
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 itertools = "0.12.1"
+dotenvy = "0.15.7"

@@ -2,6 +2,8 @@ mod core;
 mod promedios;
 
 use axum::Router;
+use dotenvy::dotenv;
+use std::env;
 use tower_http::{cors::CorsLayer, trace::TraceLayer};
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 
@@ -17,13 +19,24 @@ async fn main() {
         .with(tracing_subscriber::fmt::layer())
         .init();
 
+    if let Err(_) = dotenv() {
+        tracing::warn!("No .env file was loaded");
+    }
+
+    let port = env::var("PORT")
+        .expect("PORT is not set")
+        .parse()
+        .expect("Failed to parse PORT");
+
     let app = Router::new()
         .with_promedios()
         .layer(TraceLayer::new_for_http())
         .layer(CorsLayer::permissive());
 
-    let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
+    let listener = tokio::net::TcpListener::bind(("0.0.0.0", port))
+        .await
+        .unwrap();
 
-    tracing::info!("Starting server on port 3000");
+    tracing::info!("Starting server on port {}", port);
     axum::serve(listener, app).await.unwrap();
 }
