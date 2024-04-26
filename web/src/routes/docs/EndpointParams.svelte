@@ -6,8 +6,8 @@
 <table class="w-full">
 	<tr class="bg-primary-500">
 		<th class="w-36">Campo</th>
-		<th class="w-36">Dónde</th>
 		<th class="w-36">Tipo</th>
+		<th class="w-36">Dónde</th>
 	</tr>
 	{#each params as param}
 		<tr class="border-b" height="35">
