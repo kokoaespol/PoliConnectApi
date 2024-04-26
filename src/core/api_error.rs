@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 #[macro_export]
 macro_rules! api_error_message {
     ($message:expr) => {
-        crate::core::api_error::builder()
+        $crate::core::api_error::builder()
             .with_message($message)
             .build()
             .into_response()
@@ -23,9 +23,9 @@ pub struct ApiErrorBuilder {
 }
 
 pub fn builder() -> ApiErrorBuilder {
-    return ApiErrorBuilder {
+    ApiErrorBuilder {
         api_error: Default::default(),
-    };
+    }
 }
 
 impl ApiErrorBuilder {

@@ -1,3 +1,4 @@
+#![allow(non_snake_case)]
 mod core;
 mod promedios;
 
@@ -19,7 +20,7 @@ async fn main() {
         .with(tracing_subscriber::fmt::layer())
         .init();
 
-    if let Err(_) = dotenv() {
+    if dotenv().is_err() {
         tracing::warn!("No .env file was loaded");
     }
 
