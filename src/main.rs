@@ -1,5 +1,6 @@
 #![allow(non_snake_case)]
 mod core;
+mod healthcheck;
 mod promedios;
 
 use axum::Router;
@@ -8,7 +9,7 @@ use std::env;
 use tower_http::{cors::CorsLayer, trace::TraceLayer};
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 
-use crate::promedios::routes::WithPromediosRoutes;
+use crate::{healthcheck::routes::WithHealthCheckRoutes, promedios::routes::WithPromediosRoutes};
 
 #[tokio::main]
 async fn main() {
@@ -30,6 +31,7 @@ async fn main() {
         .expect("Failed to parse PORT");
 
     let app = Router::new()
+        .with_healthcheck()
         .with_promedios()
         .layer(TraceLayer::new_for_http())
         .layer(CorsLayer::permissive());
