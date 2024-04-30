@@ -7,7 +7,28 @@
 	export let endpoint = '';
 	export let params = [];
 	export let responses = [];
+
+	let showPopup = false;
+
+	function copyToClipboard(text) {
+        navigator.clipboard.writeText(text)
+            .then(() => {
+                showPopup = true;
+                setTimeout(() => {
+                    showPopup = false;
+                }, 1500); // 1.5s popup
+            })
+            .catch(err => {
+                console.error('Error al copiar al portapapeles: ', err);
+            });
+    }
 </script>
+
+{#if showPopup}
+    <div class="fixed bottom-5 right-5 bg-green-500 text-white px-4 py-2 rounded shadow">
+        Copiado
+    </div>
+{/if}
 
 <h3 class="text-lg mb-2 font-bold">{title}</h3>
 <div class="flex justify-between items-center w-full bg-gray-900 font-mono my-4">
@@ -16,7 +37,12 @@
 		{method}
 		{endpoint}
 	</div>
-	<i class="fa-solid fa-clipboard mr-2"></i>
+	<button
+		on:click={() => copyToClipboard(`${method} ${endpoint}`)}
+		class="cursor-pointer"
+	>
+		<i class="fa-solid fa-clipboard mr-2"></i>
+	</button>
 </div>
 
 <EndpointParams {params} />
