@@ -1,24 +1,32 @@
 <script>
 	import EndpointParams from './EndpointParams.svelte';
+	import EndpointResponse from './EndpointResponse.svelte';
 
 	export let title = '';
 	export let method = 'GET';
 	export let endpoint = '';
 	export let params = [];
+	export let responses = [];
 </script>
 
 <h3 class="text-lg mb-2 font-bold">{title}</h3>
-<div class="flex items-stretch w-full bg-gray-900 font-mono my-4 gap-2">
-	<div class="w-1 bg-primary-500 inline-block"></div>
-	{method}
-	{endpoint}
+<div class="flex justify-between items-center w-full bg-gray-900 font-mono my-4">
+	<div class="flex items-stretch gap-2">
+		<div class="w-1 bg-primary-500 inline-block"></div>
+		{method}
+		{endpoint}
+	</div>
+	<i class="fa-solid fa-clipboard mr-2"></i>
 </div>
 
 <EndpointParams {params} />
 
 <div class="mt-4">
-	<span class="text-lg mb-2 font-bold">Ejemplo de respuesta:</span>
-	<div class="border p-2 mt-4">
-		<slot />
-	</div>
+	{#each responses as response}
+		<EndpointResponse
+			params={response.params}
+			status={response.status}
+			contentType={response.contentType}
+		/>
+	{/each}
 </div>

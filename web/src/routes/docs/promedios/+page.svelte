@@ -1,31 +1,67 @@
-<script>
+<script lang="ts">
 	import Endpoint from '../Endpoint.svelte';
+	import type { EndpointParam } from '$lib/types/EndpointParam';
+	import type { EndpointResponse } from '$lib/types/EndpointResponse';
 
-	const calcularPromedioParams = [
+	const calcularPromedioParams: EndpointParam[] = [
 		{
 			campo: 'primer_parcial',
 			donde: 'cuerpo',
-			tipo: 'number'
+			tipo: 'number',
+			required: true,
+			descripcion: 'La nota del primer parcial del 0 al 100'
 		},
 		{
 			campo: 'segundo_parcial',
 			donde: 'cuerpo',
-			tipo: 'number'
+			tipo: 'number',
+			required: true,
+			descripcion: 'La nota del segundo parcial del 0 al 100'
 		},
 		{
 			campo: 'mejoramiento',
 			donde: 'cuerpo',
-			tipo: 'number'
+			tipo: 'number',
+			required: true,
+			descripcion: 'La nota de mejoramiento de 0 a 100'
 		},
 		{
 			campo: 'practico',
 			donde: 'cuerpo',
-			tipo: 'number'
+			tipo: 'number',
+			required: true,
+			descripcion: 'La nota del práctico del 0 al 100'
 		},
 		{
 			campo: 'porcentaje_practico',
 			donde: 'cuerpo',
-			tipo: 'number'
+			tipo: 'number',
+			required: true,
+			descripcion: 'El porcentaje de la nota práctica del 0 al 100'
+		}
+	];
+
+	const calcularPromedioResponses: EndpointResponse[] = [
+		{
+			status: 200,
+			contentType: 'string',
+			params: [
+				{
+					campo: 'pass',
+					tipo: 'boolean',
+					descripcion: 'Verdadero si la nota calculada es mayor a 60'
+				},
+				{
+					campo: 'missing',
+					tipo: 'number',
+					descripcion: 'Puntaje requerido en mejoramiento para pasar la materia'
+				},
+				{
+					campo: 'grade',
+					tipo: 'number',
+					descripcion: 'Nota calculada'
+				}
+			]
 		}
 	];
 </script>
@@ -41,15 +77,8 @@
 				method="POST"
 				endpoint="/promedios"
 				params={calcularPromedioParams}
-			>
-				<pre>
-OK 200; application/json
-&lbrace;
-  "missing": number | null,
-  "pass": boolean,
-  "grade": number
-&rbrace;</pre>
-			</Endpoint>
+				responses={calcularPromedioResponses}
+			/>
 		</section>
 	</section>
 </main>
