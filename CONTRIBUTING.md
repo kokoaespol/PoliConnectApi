@@ -1,18 +1,14 @@
-(WIP)
-
 # Contributing
 
 ## Contributing code
 
-1. Clone this repository:
+1. Fork this repository.
 
-```
-git clone https://github.com/kokoaespol/PoliConnectApi
-```
+2. Clone your fork.
 
-2. Code your contribution following the non-existing style guides.
+3. Code your contribution following the non-existing style guides on a separate branch so that it can be tested.
 
-3. Create a PR for us to review your code.
+4. Create a PR for us to review your code.
 
 ## Opening an issue
 
